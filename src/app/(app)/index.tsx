@@ -67,9 +67,21 @@ export default function ServiciosScreen() {
       <Stack.Screen
         options={{
           headerRight: () => (
-            <Pressable onPress={signOut} hitSlop={10}>
-              <Text style={styles.headerAction}>Salir</Text>
-            </Pressable>
+            <View style={styles.headerRight}>
+              {!isAdmin && (
+                <Pressable onPress={() => router.push('/mis-reservas')} hitSlop={10}>
+                  <Text style={styles.headerLink}>Mis reservas</Text>
+                </Pressable>
+              )}
+              {isAdmin && (
+                <Pressable onPress={() => router.push('/reservas')} hitSlop={10}>
+                  <Text style={styles.headerLink}>Reservas</Text>
+                </Pressable>
+              )}
+              <Pressable onPress={signOut} hitSlop={10}>
+                <Text style={styles.headerAction}>Salir</Text>
+              </Pressable>
+            </View>
           ),
         }}
       />
@@ -94,7 +106,11 @@ export default function ServiciosScreen() {
             <Text style={styles.muted}>No hay servicios disponibles todavía.</Text>
           }
           renderItem={({ item }) => (
-            <View style={styles.card}>
+            <Pressable
+              style={styles.card}
+              onPress={() => router.push({ pathname: '/reservar', params: { id: String(item.id) } })}
+              disabled={isAdmin}
+            >
               <Text style={styles.cardTitle}>{item.nombre}</Text>
               {!!item.descripcion && (
                 <Text style={styles.cardDesc}>{item.descripcion}</Text>
@@ -105,7 +121,8 @@ export default function ServiciosScreen() {
                 </View>
                 <Text style={styles.precio}>${item.precio}</Text>
               </View>
-            </View>
+              {!isAdmin && <Text style={styles.tapHint}>Toca para reservar</Text>}
+            </Pressable>
           )}
         />
       )}
@@ -196,5 +213,20 @@ const styles = StyleSheet.create({
     color: colors.danger,
     fontSize: 15,
     fontWeight: '600',
+  },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  headerLink: {
+    color: colors.primary,
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  tapHint: {
+    marginTop: 8,
+    color: colors.muted,
+    fontSize: 13,
   },
 });

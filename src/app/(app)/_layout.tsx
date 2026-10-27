@@ -14,6 +14,9 @@ export default function AppLayout() {
     >
       <Stack.Screen name="index" options={{ title: 'Servicios' }} />
       <Stack.Screen name="nuevo" options={{ title: 'Nuevo servicio' }} />
+      <Stack.Screen name="reservar" options={{ title: 'Reservar servicio' }} />
+      <Stack.Screen name="mis-reservas" options={{ title: 'Mis reservas' }} />
+      <Stack.Screen name="reservas" options={{ title: 'Todas las reservas' }} />
     </Stack>
   );
 }

@@ -18,8 +18,6 @@ module.exports = {
         monochromeImage: './assets/android-icon-monochrome.png',
       },
       predictiveBackGestureEnabled: false,
-      // Permite tráfico en claro: útil si pruebas contra tu backend local
-      // (http://192.168.x.x:3000). La API de producción es https.
       usesCleartextTraffic: true,
     },
     web: {
@@ -27,10 +25,7 @@ module.exports = {
     },
     plugins: ['expo-router', 'expo-status-bar'],
     extra: {
-      // La URL de la API NO se hardcodea en el código: se lee desde aquí
-      // con Constants.expoConfig.extra.apiUrl (ver src/lib/api.ts).
-      // IMPORTANTE: Railway redirige http -> https (301), y eso rompe los
-      // POST (login/registro). Por eso debe usarse https://.
+      
       apiUrl:
         process.env.EXPO_PUBLIC_API_URL ??
         'https://api-servicios-production-5385.up.railway.app',
